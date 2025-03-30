@@ -1,0 +1,2 @@
+#!/bin/sh
+tsocks ssh -o UserKnownHostsFile=/etc/ssh/known_hosts "$@"

@@ -1,3 +1,3 @@
 #!/bin/sh
-sshfs "$SSHFS_REMOTE" /mnt -o _netdev,allow_other,reconnect,idmap=user,ssh_command=/usr/local/bin/tsocks-ssh || exit 1
+sshfs "$SSHFS_REMOTE" /mnt -o _netdev,allow_other,reconnect,idmap=user,ssh_command=/usr/local/bin/ssh-wrapper || exit 1
 tail -f /dev/null
