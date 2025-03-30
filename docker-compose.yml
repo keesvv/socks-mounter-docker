@@ -1,0 +1,23 @@
+services:
+  mounter:
+    build:
+      context: .
+    environment:
+      - SSHFS_REMOTE=user@remote:/path/to/remote
+    volumes:
+      - remote:/mnt
+      - ./examples/tsocks.conf:/etc/tsocks.conf
+    cap_add:
+      - SYS_ADMIN
+    devices:
+      - /dev/fuse
+  debug:
+    image: busybox:latest
+    command: ls -la /mnt
+    volumes:
+      - remote:/mnt
+    depends_on:
+      - mounter
+    tty: true
+volumes:
+  remote:
