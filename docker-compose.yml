@@ -2,23 +2,23 @@ services:
   mounter:
     build:
       context: .
-    environment:
-      - SSHFS_REMOTE=user@remote:/path/to/remote
+    env_file: .env
+    # environment:
+    #   - SSHFS_REMOTE=user@remote:/path/to/remote
     volumes:
-      - remote:/mnt
+      - ./mnt:/mnt
       - ./examples/tsocks.conf:/etc/tsocks.conf
       - ./examples/known_hosts:/etc/ssh/known_hosts
+      - ./examples/id_ed25519:/etc/ssh/key
     cap_add:
       - SYS_ADMIN
     devices:
       - /dev/fuse
   debug:
     image: busybox:latest
-    command: ls -la /mnt
+    command: sh -c "sleep 4; ls -la /mnt"
     volumes:
-      - remote:/mnt
+      - ./mnt:/mnt
     depends_on:
       - mounter
     tty: true
-volumes:
-  remote:
